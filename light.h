@@ -1,45 +1,59 @@
+#define SPEEDA D4
+#define UPA D3
+#define DOWNA D2
+
+#define SPEEDB D6
+#define UPB D7
+#define DOWNB D8
+
+#define STANDBY D0
+
+SI114X SI1145 = SI114X();
+const int initial_value_speed = 255;
+
 void setup_light() {
-  while (!SI1145.Begin()) {
-    debug("Si1145 is not ready!");
-    delay(1000);
-  }
-  pinMode(6, OUTPUT);
-  pinMode(7, OUTPUT);
-  pinMode(8, OUTPUT);
-  pinMode(13, OUTPUT);
-  pinMode(12, OUTPUT);
-  pinMode(11, OUTPUT);
+  //while (!SI1145.Begin()) {
+  //  debug("SI1145 is not ready!");
+  //  delay(500);
+  //}
+  pinMode(SPEEDA, OUTPUT);
+  pinMode(UPA, OUTPUT);
+  pinMode(DOWNA, OUTPUT);
+  pinMode(SPEEDB, OUTPUT);
+  pinMode(UPB, OUTPUT);
+  pinMode(DOWNB, OUTPUT);
   pinMode(4, INPUT);
   pinMode(5, INPUT);
+  debug("Done configuring SI1145");
 }
 
 bool tendaUpA(int s) {
-   digitalWrite(6,s); 
-   digitalWrite(7,HIGH); 
-   digitalWrite(8,LOW);
+   digitalWrite(SPEEDA,s); 
+   digitalWrite(UPA,HIGH); 
+   digitalWrite(DOWNA,LOW);
 }
 
 bool tendaUpB(int s) {
-   digitalWrite(11,s); 
-   digitalWrite(12,HIGH); 
-   digitalWrite(13,LOW);
+   digitalWrite(SPEEDB,s); 
+   digitalWrite(UPB,HIGH); 
+   digitalWrite(DOWNB,LOW);
 }
 
 bool tendaDownA(int s) {
-   digitalWrite(6,s); 
-   digitalWrite(7,LOW); 
-   digitalWrite(8,HIGH);
+   digitalWrite(SPEEDA,s); 
+   digitalWrite(UPA,LOW); 
+   digitalWrite(DOWNA,HIGH);
 }
 
 bool tendaDownB(int s) {
-   digitalWrite(11,s); 
-   digitalWrite(12,LOW); 
-   digitalWrite(13,HIGH);
+   digitalWrite(SPEEDB,s); 
+   digitalWrite(UPB,LOW); 
+   digitalWrite(DOWNB,HIGH);
 }
 
 void stopAll() {
-  digitalWrite(11,0); 
-  digitalWrite(6,0); 
+  digitalWrite(SPEEDA,0); 
+  digitalWrite(SPEEDB,0); 
 }
 
 
