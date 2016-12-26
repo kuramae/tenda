@@ -1,3 +1,5 @@
+//#include <SI114X.h>
+
 #define SPEEDA D4
 #define UPA D3
 #define DOWNA D2
@@ -8,8 +10,14 @@
 
 #define STANDBY D0
 
-SI114X SI1145 = SI114X();
-const int initial_value_speed = 255;
+//SI114X SI1145 = SI114X();
+const int initial_value_speed = PWMRANGE;
+void setup_light_pins() {
+  pinMode(D0, OUTPUT);
+  pinMode(D2, OUTPUT);
+  pinMode(D3, OUTPUT);
+  pinMode(D4, OUTPUT);
+}
 
 void setup_light() {
   //while (!SI1145.Begin()) {
@@ -81,3 +89,39 @@ bool speed(int luce, int target) {
       return 255;
     }
 }
+
+
+int fotoInt() {
+//  SI1145.ReadVisible();
+}
+
+int fotoEst() {
+  // Currently not supported
+  return -1;
+}
+
+
+BLYNK_WRITE(V0) {
+  int pinData = param.asInt(); 
+  Serial.print("D0:"); Serial.println(pinData);
+  digitalWrite(D0,pinData); 
+}
+
+BLYNK_WRITE(V2) {
+  int pinData = param.asInt(); 
+  Serial.print("D2:"); Serial.println(pinData);
+  analogWrite(D2,pinData); 
+}
+
+BLYNK_WRITE(V3) {
+  int pinData = param.asInt(); 
+  Serial.print("D3:"); Serial.println(pinData);
+  digitalWrite(D3,pinData); 
+}
+
+BLYNK_WRITE(V4) {
+  int pinData = param.asInt(); 
+  Serial.print("D4:"); Serial.println(pinData);
+  digitalWrite(D4,pinData); 
+}
+
