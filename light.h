@@ -1,38 +1,41 @@
 //#include <SI114X.h>
 
-#define SPEEDA D4
+#define SPEEDA D2
+#define SPEEDAV V2
 #define UPA D3
-#define DOWNA D2
+#define UPAV V3
+#define DOWNA D4
+#define DOWNAV V4
 
 #define SPEEDB D6
+#define SPEEDBV V6
 #define UPB D7
+#define UPBV V7
 #define DOWNB D8
+#define DOWNBV V8
 
 #define STANDBY D0
+#define STANDBYV V0
 
 //SI114X SI1145 = SI114X();
 const int initial_value_speed = PWMRANGE;
-void setup_light_pins() {
-  pinMode(D0, OUTPUT);
-  pinMode(D2, OUTPUT);
-  pinMode(D3, OUTPUT);
-  pinMode(D4, OUTPUT);
-}
 
-void setup_light() {
-  //while (!SI1145.Begin()) {
-  //  debug("SI1145 is not ready!");
-  //  delay(500);
-  //}
+void setup_light_pins() {
+  pinMode(STANDBY, OUTPUT);
   pinMode(SPEEDA, OUTPUT);
   pinMode(UPA, OUTPUT);
   pinMode(DOWNA, OUTPUT);
   pinMode(SPEEDB, OUTPUT);
   pinMode(UPB, OUTPUT);
   pinMode(DOWNB, OUTPUT);
-  pinMode(4, INPUT);
-  pinMode(5, INPUT);
-  debug("Done configuring SI1145");
+  debug("\nPins are set");
+}
+
+void initialize_values() {
+  Blynk.virtualWrite(STANDBYV, 1);
+  Blynk.virtualWrite(SPEEDAV, initial_value_speed);
+  Blynk.virtualWrite(SPEEDBV, initial_value_speed);
+  debug("\nValues initialized");
 }
 
 bool tendaUpA(int s) {
@@ -100,28 +103,48 @@ int fotoEst() {
   return -1;
 }
 
-
-BLYNK_WRITE(V0) {
+// STANDBY
+BLYNK_WRITE(STANDBYV) {
   int pinData = param.asInt(); 
-  Serial.print("D0:"); Serial.println(pinData);
-  digitalWrite(D0,pinData); 
+  Serial.print("Standby:"); Serial.println(pinData);
+  digitalWrite(STANDBY,pinData); 
 }
 
-BLYNK_WRITE(V2) {
+// ENGINE A
+BLYNK_WRITE(SPEEDAV) {
   int pinData = param.asInt(); 
-  Serial.print("D2:"); Serial.println(pinData);
-  analogWrite(D2,pinData); 
+  Serial.print("Speed A:"); Serial.println(pinData);
+  analogWrite(SPEEDA,pinData); 
 }
 
-BLYNK_WRITE(V3) {
+BLYNK_WRITE(UPAV) {
   int pinData = param.asInt(); 
-  Serial.print("D3:"); Serial.println(pinData);
-  digitalWrite(D3,pinData); 
+  Serial.print("Up A:"); Serial.println(pinData);
+  digitalWrite(UPA,pinData); 
 }
 
-BLYNK_WRITE(V4) {
+BLYNK_WRITE(DOWNAV) {
   int pinData = param.asInt(); 
-  Serial.print("D4:"); Serial.println(pinData);
-  digitalWrite(D4,pinData); 
+  Serial.print("Down A:"); Serial.println(pinData);
+  digitalWrite(DOWNA,pinData); 
+}
+
+// ENGINE B
+BLYNK_WRITE(SPEEDBV) {
+  int pinData = param.asInt(); 
+  Serial.print("Speed B:"); Serial.println(pinData);
+  analogWrite(SPEEDB,pinData); 
+}
+
+BLYNK_WRITE(UPBV) {
+  int pinData = param.asInt(); 
+  Serial.print("Up B:"); Serial.println(pinData);
+  digitalWrite(UPB,pinData); 
+}
+
+BLYNK_WRITE(DOWNBV) {
+  int pinData = param.asInt(); 
+  Serial.print("Down B:"); Serial.println(pinData);
+  digitalWrite(DOWNB,pinData); 
 }
 

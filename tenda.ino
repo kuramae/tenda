@@ -28,9 +28,10 @@ void setup() {
   // setup_light();
   
   Blynk.begin(AUTH, WIFI_NAME, WIFI_PASSWORD);
-  debug("\nConnecting to Blynk through WIFI:");
+  debug("\nConnecting to Blynk through WIFI: ");
   debug(WIFI_NAME);
   debug("\nBlynk v" BLYNK_VERSION ": Device started\n");
+  initialize_values();
 }
 
 BLYNK_WRITE(V13) {
