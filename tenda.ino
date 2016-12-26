@@ -1,11 +1,16 @@
 #include <ESP8266WiFi.h>
 #include <BlynkSimpleEsp8266.h>
 
+// Attach virtual serial terminal to Virtual Pin V1
+WidgetTerminal terminal(V50);
+
 #include "configuration.h"
 //#include "touch.h"
 #include "util.h"
 #include "light.h"
 #include <SimpleTimer.h>
+
+
 
 // Initialize variables
 bool started=false;

@@ -32,9 +32,9 @@ void setup_light_pins() {
 }
 
 void initialize_values() {
-  Blynk.virtualWrite(STANDBYV, 1);
-  Blynk.virtualWrite(SPEEDAV, initial_value_speed);
-  Blynk.virtualWrite(SPEEDBV, initial_value_speed);
+  digitalWrite(STANDBY, 1);
+  analogWrite(SPEEDA, initial_value_speed);
+  analogWrite(SPEEDB, initial_value_speed);
   debug("\nValues initialized");
 }
 
@@ -106,45 +106,45 @@ int fotoEst() {
 // STANDBY
 BLYNK_WRITE(STANDBYV) {
   int pinData = param.asInt(); 
-  Serial.print("Standby:"); Serial.println(pinData);
+  terminal.print(F("Standby:")); terminal.println(pinData); terminal.flush();
   digitalWrite(STANDBY,pinData); 
 }
 
 // ENGINE A
 BLYNK_WRITE(SPEEDAV) {
   int pinData = param.asInt(); 
-  Serial.print("Speed A:"); Serial.println(pinData);
+  terminal.print(F("Speed A:")); terminal.println(pinData); terminal.flush();
   analogWrite(SPEEDA,pinData); 
 }
 
 BLYNK_WRITE(UPAV) {
   int pinData = param.asInt(); 
-  Serial.print("Up A:"); Serial.println(pinData);
+  terminal.print(F("Up A:")); terminal.println(pinData); terminal.flush();
   digitalWrite(UPA,pinData); 
 }
 
 BLYNK_WRITE(DOWNAV) {
   int pinData = param.asInt(); 
-  Serial.print("Down A:"); Serial.println(pinData);
+  terminal.print(F("Down A:")); terminal.println(pinData); terminal.flush();
   digitalWrite(DOWNA,pinData); 
 }
 
 // ENGINE B
 BLYNK_WRITE(SPEEDBV) {
   int pinData = param.asInt(); 
-  Serial.print("Speed B:"); Serial.println(pinData);
+  terminal.print(F("Speed B:")); terminal.println(pinData); terminal.flush();
   analogWrite(SPEEDB,pinData); 
 }
 
 BLYNK_WRITE(UPBV) {
   int pinData = param.asInt(); 
-  Serial.print("Up B:"); Serial.println(pinData);
+  terminal.print(F("Up B:")); terminal.println(pinData); terminal.flush();
   digitalWrite(UPB,pinData); 
 }
 
 BLYNK_WRITE(DOWNBV) {
   int pinData = param.asInt(); 
-  Serial.print("Down B:"); Serial.println(pinData);
+  terminal.print(F("Down B:")); terminal.println(pinData); terminal.flush();
   digitalWrite(DOWNB,pinData); 
 }
 
