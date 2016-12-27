@@ -44,9 +44,12 @@ void setup_light_pins() {
   pinMode(SPEEDB, OUTPUT);
   pinMode(UPB, OUTPUT);
   pinMode(DOWNB, OUTPUT);
+
+  if (USE_FINE_CORSA) {
+    pinMode(FINEUP, INPUT);
+    pinMode(FINEDOWN, INPUT);
+  }
   
-//  pinMode(FINEUP, INPUT);
-//  pinMode(FINEDOWN, INPUT);
   debug("\nPins are set");
 }
 
@@ -114,13 +117,19 @@ void stopAll() {
 
 
 bool fineCorsaUp() {
-  return false;
-//  return digitalRead(FINEUP) != LOW;
+  if (USE_FINE_CORSA) {
+    return digitalRead(FINEUP) != LOW;
+  } else {
+    return false;
+  }
 }
 
 bool fineCorsaDown() {
-  return false;
-//  return digitalRead(FINEDOWN) != LOW;
+  if (USE_FINE_CORSA) {
+    return digitalRead(FINEDOWN) != LOW;
+  } else {
+    return false;
+  }
 }
 
 bool directionUp(int luce, int target) {
@@ -143,9 +152,9 @@ int speed(int luce, int target) {
 
 void light_logic() {
   if (!manual) {    
-    int internalLight=fotoInt();
-    int fineCorsaU = digitalRead(FINEUP);
-    int fineCorsaD = digitalRead(FINEDOWN);
+    int internalLight = fotoInt();
+    bool fineCorsaU = fineCorsaUp();
+    bool fineCorsaD = fineCorsaDown();
 
     if (logCount > logFrequency) {
       terminal.print(F("Internal light:")); terminal.println(internalLight); 

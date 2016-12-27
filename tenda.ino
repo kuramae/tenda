@@ -6,8 +6,8 @@
 WidgetTerminal terminal(V50);
 
 #include "configuration.h"
-//#include "touch.h"
 #include "util.h"
+#include "touch.h"
 #include "light.h"
 #include <SimpleTimer.h>
 
@@ -18,7 +18,8 @@ void setup() {
   while (!Serial);
   Wire.begin();
   // Setup the touch handling
-  //setup_touch();
+  // setup_touch_sensors();
+  // init_touch();
   
   // Setup the light handling
   setup_light_pins();
@@ -37,10 +38,10 @@ void loop() {
     lastLightMillis = millis();
     light_logic();
   }
-  //if (TOUCH_INTERVAL_MS < (millis()-lastTouchMillis)) {
-  //  lastTouchMillis = millis();
-  //  touch_loop();
-  //}
+  if (TOUCH_INTERVAL_MS < (millis()-lastTouchMillis)) {
+    lastTouchMillis = millis();
+    //touch_loop();
+  }
   delay(TOUCH_INTERVAL_MS);
   if (DEBUG) delay(DEBUG_EXTRA_INTERVAL_MS);
 }

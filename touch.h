@@ -1,8 +1,6 @@
 #include <Wire.h>
 #include "Adafruit_MPR121.h"
 
-
-
 const int ROWS = 12;
 const int SIDE_PIN = 6;
 const int SWIPE_SECS = 3;
@@ -17,8 +15,6 @@ const int CENTER_PIN[ROWS] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11};
 const float VARIANCE_THRESHOLD = 30;
 
 const int NONE = -1;
-
-
 
 // You can have up to 4 on one i2c bus
 Adafruit_MPR121 cap = Adafruit_MPR121();
@@ -82,8 +78,7 @@ int find_maximum(int a[], int n) {
        index = c;
        max = a[c];
     }
-  }
- 
+  } 
   return index;
 }
 
@@ -122,28 +117,36 @@ float evaluate_movement(const int * const pin, const int pin_number) {
 }
   
 
-void setup_touch() {
+void setup_touch_sensors() {
   // debug("Adafruit MPR121 Capacitive Touch sensor test\n"); 
   // Default address is 0x5A, if tied to 3.3V its 0x5B
   // If tied to SDA its 0x5C and if SCL then 0x5D
+  while (!Serial) { 
+    delay(10);
+  }
   if (!cap.begin(0x5A)) {
-    debug("MPR121 not found, check wiring?\n");
+    Serial.println("MPR121 not found, check wiring?");
     while (1);
   }
   debug("MPR121 found!\n");
-  for(int i = 0; i < ROWS; i++) pin_values[i] = (int *) malloc(POINTS * sizeof(int));
 }
+
+void init_touch() {
+  for(int i = 0; i < ROWS; i++) pin_values[i] = (int *) malloc(POINTS * sizeof(int));  
+}
+
 
 void touch_loop() {
   // debug_state();
-  // debug_matrix();
-  debug_lumen();
+  debug_matrix();
   save_new_values();
   float left_intensity = evaluate_movement(LEFT_PIN, SIDE_PIN);
-  // float right_intensity = evaluate_movement(RIGHT_PIN, SIDE_PIN);
-  // float center_intensity = evaluate_movement(CENTER_PIN, ROWS);
+  terminal.print("Left intensity: "); terminal.println(left_intensity);
+  float right_intensity = evaluate_movement(RIGHT_PIN, SIDE_PIN);
+  terminal.print("Right intensity: "); terminal.println(right_intensity);
+  float center_intensity = evaluate_movement(CENTER_PIN, ROWS);
+  terminal.print("Center intensity: "); terminal.println(center_intensity);
   // Remember to check initialized() before deciding
-  if (DEBUG) delay(600);
-  return; 
+  terminal.flush();
 }
 

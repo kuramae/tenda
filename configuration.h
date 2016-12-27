@@ -17,4 +17,6 @@ static const char WIFI_PASSWORD[] = "Wiiiphone5";
 
 // Note that in debug mode there is an extra delay
 static const int TOUCH_INTERVAL_MS = 75;
-static const int LIGHT_INTERVAL_MS = 300;
+static const int LIGHT_INTERVAL_MS = 500;
+
+static const bool USE_FINE_CORSA = false;
