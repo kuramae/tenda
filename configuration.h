@@ -1,7 +1,7 @@
 // Uncomment for debugging
 // #define BLYNK_DEBUG  
 #define BLYNK_PRINT Serial 
-static const bool DEBUG = true;
+static const bool DEBUG = false;
 
 static const int DEBUG_EXTRA_INTERVAL_MS = 500;
 

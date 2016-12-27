@@ -120,14 +120,6 @@ float evaluate_movement(const int * const pin, const int pin_number) {
   }
   debug("\n");
 }
-
-void debug_lumen() {
-  Serial.print("//--------------------------------------//\r\n");
-  Serial.print("Vis: "); Serial.println(SI1145.ReadVisible());
-  Serial.print("IR: "); Serial.println(SI1145.ReadIR());
-  //the real UV value must be div 100 from the reg value , datasheet for more information.
-  Serial.print("UV: ");  Serial.println((float)SI1145.ReadUV()/100);
-}
   
 
 void setup_touch() {
